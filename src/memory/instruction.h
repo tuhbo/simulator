@@ -1,15 +1,22 @@
-#include <stdio.h>
+#ifndef INSTRUCTION_H
+#define INSTRUCTION_H
+
 #include <stdint.h>
 
 typedef enum OP {
-  MOV,
-  PUSH,
-  CALL,
+  mov_reg_reg,
+	mov_reg_mem,
+	mov_mem_reg,
+  push_reg,
+	pop_reg,
+  call,
+	ret,
   add_reg_reg,
   NUM
 } op_t;
 
 typedef enum OD_TYPE {
+	EMPTY,
 	IMM,
 	REG,
 	MM_IMM,
@@ -29,16 +36,16 @@ typedef struct OD {
 	uint64_t scal;
 	uint64_t *reg1;
 	uint64_t *reg2;
-  char code[100];
 } od_t;
 
 typedef struct INSTRUCT_STRUCT {
   op_t op;
   od_t src;
   od_t dst;
+  char code[100];
 } inst_t;
 
-typedef void(*hanlder_t)(uint64_t, uint64_t);
+typedef void(*handler_t)(uint64_t, uint64_t);
 
 handler_t handler_table[NUM];
 
@@ -46,4 +53,16 @@ void init_handler_table();
 
 void add_reg_reg_handler(uint64_t src, uint64_t dst);
 
+void mov_reg_reg_handler(uint64_t src, uint64_t dst);
+
+void mov_reg_mem_handler(uint64_t src, uint64_t dst);
+
+void call_handler(uint64_t src, uint64_t dst);
+
+void push_reg_handler(uint64_t src, uint64_t dst);
+
+void pop_reg_handler(uint64_t src, uint64_t dst);
+
 void instruction_cycle();
+
+#endif
