@@ -58,7 +58,7 @@ int main() {
   print_register();
   print_stack();
 
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < 15; i++) {
     instruction_cycle();
     print_register();
     print_stack();
@@ -72,8 +72,8 @@ int main() {
   match = match && (reg.rdx == 0x12340000);
   match = match && (reg.rsi == 0xabcd);
   match = match && (reg.rdi == 0x12340000);
-  match = match && (reg.rbp == 0x7fffffffee210);
-  match = match && (reg.rax == 0x7fffffffee1f0);
+  match = match && (reg.rbp == 0x7ffffffee210);
+  match = match && (reg.rsp == 0x7ffffffee1f0);
 
   if (match) {
     printf("register match\n");

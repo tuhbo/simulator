@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g -O2 -Werror
+CFLAGS = -Wall -g -Werror
 
 EXE = program
 
