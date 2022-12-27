@@ -1,14 +1,23 @@
 CC = gcc
-CFLAGS = -Wall -g -Werror
+CFLAGS = -Wall -g -Werror -Wno-unused-function
 
-EXE = program
+EXE = simulator
 
-SRC = ./src
+SRC_DIR = ./src
 
-CODE = $(SRC)/cpu/mmu.c $(SRC)/disk/code.c $(SRC)/memory/instruction.c $(SRC)/memory/dram.c $(SRC)/main.c
+COMMON = $(SRC_DIR)/common/print.c $(SRC_DIR)/common/convert.c
 
-main:
-	$(CC) $(CFLAGS) -I$(SRC) $(CODE) -o $(EXE)
+CPU = $(SRC_DIR)/hardware/cpu/mmu.c $(SRC_DIR)/hardware/cpu/isa.c
+MEMORY = $(SRC_DIR)/hardware/memory/dram.c
+
+MAIN = $(SRC_DIR)/main.c
+
+.PHONY:hardware
+hardware:
+	$(CC) $(CFLAGS) -I$(SRC_DIR) $(COMMON) $(CPU) $(MEMORY) $(DISK) $(MAIN) -o $(EXE)
 
 run:
 	./$(EXE)
+
+clean:
+	rm -rf *.o $(EXE)
