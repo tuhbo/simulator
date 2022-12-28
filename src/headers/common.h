@@ -24,10 +24,6 @@
 // printf wrapper
 uint64_t debug_printf(uint64_t open_set, const char *format, ...);
 
-// type converter
-// uint32 to its equivalent float with rounding
-uint32_t uint2float(uint32_t u);
-
 // convert string dec or hex to the integer bitmap
 uint64_t string2uint(const char *str);
 uint64_t string2uint_range(const char *str, int start, int end);

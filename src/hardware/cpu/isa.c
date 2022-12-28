@@ -43,7 +43,7 @@ typedef struct OPERAND_STRUCT {
   od_type_t   type;   // IMM, REG, MEM
   uint64_t    imm;    // immediate number
   uint64_t    scal;   // scale number to register 2
-  uint64_t    reg1;   // main register
+  uint64_t    reg1;   // main register (address)
   uint64_t    reg2;   // register 2
 } od_t;
 
@@ -107,8 +107,33 @@ static void parse_instruction(const char *str, inst_t *inst, core_t *cr) {
     
 }
 
+/**
+ * @brief parse string to operand
+ * 
+ * @param str assembly code string, e.g. mov $rsp,$rbp
+ * @param od pointer to the address to store the parsed operand
+ * @param cr active core processor
+ */
 static void parse_operand(const char *str, od_t *od, core_t *cr) {
+  od->type = EMPTY;
+  od->imm = 0;
+  od->scal = 0;
+  od->reg1 = 0;
+  od->reg2 = 0;
 
+  int str_len = strlen(str);
+  if (str_len == 0) {
+    return; // empty operand string
+  }
+
+  if (str[0] == '$') { // immediate number
+    od->type = IMM;
+    od->imm = string2uint_range(str, 1, -1);
+  } else if (str[0] =='%') { // reg
+
+  } else {
+
+  }
 }
 
 /*======================================*/
