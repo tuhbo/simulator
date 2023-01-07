@@ -8,38 +8,19 @@
 
 static void TestAddFunctionCallAndComputation();
 
-static void TestString2Uint();
+void TestParsingOperand();
 
 // symbols from isa and sram
 void print_register(core_t *cr);
 void print_stack(core_t *cr);
 
 int main() {
-  TestString2Uint();
+  TestParsingOperand();
   // TestAddFunctionCallAndComputation();
   return 0;
 }
 
-static void TestString2Uint() {
-  const char *nums[12] = {
-    "0",
-    "-0",
-    "0x0",
-    "1234",
-    "0x1234",
-    "0xabcd",
-    "-0xabcd",
-    "-1234",
-    "2147483647",
-    "-2147483648",
-    "0x8000000000000000",
-    "0xffffffffffffffff"
-  };
 
-  for (int i = 0; i < 12; i++) {
-    printf("%s => %lx\n", nums[i], string2uint_range(nums[i], 0, -1));
-  }
-}
 
 static void TestAddFunctionCallAndComputation() {
   ACTIVE_CORE = 0x0;
@@ -56,10 +37,10 @@ static void TestAddFunctionCallAndComputation() {
   ac->reg.rbp = 0x7ffffffee110;
   ac->reg.rsp = 0x7ffffffee0f0;
 
-  ac->CF = 0;
-  ac->ZF = 0;
-  ac->SF = 0;
-  ac->OF = 0;
+  ac->flags.CF = 0;
+  ac->flags.ZF = 0;
+  ac->flags.SF = 0;
+  ac->flags.OF = 0;
 
   write64bits_dram(va2pa(0x7ffffffee110, ac), 0x0000000000000000, ac);    // rbp
   write64bits_dram(va2pa(0x7ffffffee108, ac), 0x0000000000000000, ac);
