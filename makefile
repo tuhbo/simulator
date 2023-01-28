@@ -12,7 +12,7 @@ MEMORY = $(SRC_DIR)/hardware/memory/dram.c
 
 MAIN = $(SRC_DIR)/main.c
 
-.PHONY:hardware
+.PHONY:simulator
 simulator:
 	$(CC) $(CFLAGS) -I$(SRC_DIR) $(COMMON) $(CPU) $(MEMORY) $(DISK) $(MAIN) -o $(EXE)
 
